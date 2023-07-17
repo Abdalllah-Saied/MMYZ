@@ -19,7 +19,13 @@ return new class extends Migration
             $table->string('color')->nullable();
             $table->string('image')->nullable();
             $table->string('code')->unique();
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('branch_id');
             $table->timestamps();
+
+
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('branch_id')->references('id')->on('branches');
         });
     }
 
