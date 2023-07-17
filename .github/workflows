@@ -5,14 +5,18 @@ on:
       - master
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install Dependencies
-        run: composer install
-      - name: Compile code
-        run: php -l index.php
-      - name: Run tests
-        run: vendor/bin/phpunit tests/
+        run: composer install --prefer-dist --no-interaction
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Run Migrations
+        run: php artisan migrate --force
+      - name: Run Tests
+        run: vendor/bin/phpunit
+      - name: Check Coding Standards
+        run: vendor/bin/phpcs
