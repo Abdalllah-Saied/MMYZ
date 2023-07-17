@@ -1,1 +1,19 @@
+name: Build and Test PHP Application
+on: [push]
 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up PHP
+        uses: actions/setup-php@v2
+        with:
+          php-version: '7.4'
+      - name: Install dependencies
+        uses: shivammathur/setup-php@v2
+        with:
+          extensions: pdo_mysql
+      - name: Build
+        run: php build.php
